@@ -37,7 +37,10 @@ const Navbar = () => {
           flex: 1,
         }}
       />
-      <p>Favoritos</p>
+      <Link href={"/favoritos"}>
+        Favoritos
+      </Link>
+     
     </div>
   );
 };
