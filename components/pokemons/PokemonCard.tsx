@@ -13,8 +13,8 @@ const PokemonCard: FC<props> = ({ pokemons}) => {
 
   const router = useRouter()
 
-  const handleClick = (id:number) => {
-    router.push(`/pokemon/${id}`)
+  const handleClick = (name:string) => {
+    router.push(`/name/${name}`)
   }
   return (
     <div>
@@ -48,7 +48,7 @@ const PokemonCard: FC<props> = ({ pokemons}) => {
               }}
               isHoverable
               isPressable
-              onClick={()=>handleClick(p.id)}
+              onClick={()=>handleClick(p.name)}
             >
               <CardMedia
                 sx={{ width: "100%", height: "160px", objectFit: "contain" }}
