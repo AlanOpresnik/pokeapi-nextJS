@@ -9,7 +9,7 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
 const Favoritos = () => {
-  const [favoritePokemons, setFavoritePokemons] = useState<Number[]>([]);
+  const [favoritePokemons, setFavoritePokemons] = useState<number[]>([]);
 
   useEffect(() => {
     setFavoritePokemons(pokemons);
@@ -17,12 +17,13 @@ const Favoritos = () => {
 
   return (
     <>
-      <Layout title={"favoritos"} />
+      <Layout  title={"favoritos"}>
       {favoritePokemons.length === 0 ? (
         <NoFavorites />
       ) : (
-        <FavoriteCard favoritePokemons={favoritePokemons}/>
+        <FavoriteCard favoritePokemons={favoritePokemons} />
       )}
+      </Layout>
     </>
   );
 };

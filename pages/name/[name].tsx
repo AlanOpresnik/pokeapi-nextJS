@@ -6,12 +6,13 @@ import { existPokemonInFavorite, toggleFavorite } from "@/utils/localFavorites";
 import { CardMedia, Container, Grid } from "@mui/material";
 import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import confetti from "canvas-confetti"
+import confetti from "canvas-confetti";
 import Image from "next/image";
 
 import { useRouter } from "next/router";
 
 import React, { useEffect, useState } from "react";
+import { getPokemonInfo } from "@/utils/getPokemonInfo";
 
 interface props {
   pokemon: Pokemon;
@@ -26,17 +27,17 @@ const PokemonByNamePage: NextPage<props> = ({ pokemon }) => {
     toggleFavorite(pokemon.id);
     setIsInFavorites(!isInFavorites);
 
-    if(!isInFavorites){
+    if (!isInFavorites) {
       confetti({
-        zIndex:9999,
-        particleCount:100,
-        spread:160,
-        angle:-100,
-        origin:{
-          x:1,
-          y:0,
-        }
-      })
+        zIndex: 9999,
+        particleCount: 100,
+        spread: 160,
+        angle: -100,
+        origin: {
+          x: 1,
+          y: 0,
+        },
+      });
     }
   };
   return (
@@ -128,8 +129,8 @@ const PokemonByNamePage: NextPage<props> = ({ pokemon }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  const {data} = await pokeApi.get<PokemonListResponse>("/pokemon?limit=151")
-    const pokemonNames: string[] = data.results.map(pokemon => pokemon.name)
+  const { data } = await pokeApi.get<PokemonListResponse>("/pokemon?limit=151");
+  const pokemonNames: string[] = data.results.map((pokemon) => pokemon.name);
   return {
     paths: pokemonNames.map((name) => ({
       params: { name },
@@ -140,12 +141,9 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
-
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
-
   return {
     props: {
-      pokemon: data,
+      pokemon: await getPokemonInfo(name),
     },
   };
 };
